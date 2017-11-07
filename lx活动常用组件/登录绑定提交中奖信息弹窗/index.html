@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<script src="//xz.voicecloud.cn/activity/ai_niu/js/lxadp.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<title>Document</title>
+</head>
+<body>
+	<div class="home">
+	  
+	  <span style="font-size: 16px;" class="game-times">0</span>
+	  
+		<!--登录弹窗-->
+    <div class="pop pop-login">
+      <div class="login-mask"></div>
+      <div class="pop-main">
+        <img class="pop-bg" src="images/pop-login.png" />
+        <img class="pop-btn go-login" src="images/go-login.png" />
+        <img class="pop-btn no-login" src="images/no-login.png" />
+      </div>
+    </div>
+    
+    <!--绑定弹窗-->
+    <div class="pop pop-bind">
+      <div class="bind-mask"></div>
+      <div class="pop-main">
+        <img class="pop-bg" src="images/pop-bind.png" />
+        <img class="pop-btn go-bind" src="images/go-bind.png" />
+        <img class="pop-btn no-bind" src="images/no-bind.png" />
+      </div>
+    </div>
+    
+    <!--未中奖弹窗-->
+    <div class="pop no-prize">
+      <div class="pop-mask"></div>
+      <div class="pop-main">
+        <img class="pop-bg no-bg" src="images/no-prize.png" />
+        <img class="pop-btn no-btn" src="images/know.png" />
+      </div>
+    </div>
+    
+    <!--中奖弹窗-->
+    <div class="pop pop-prize" style="display: block;">
+      <div class="prize-mask"></div>
+      <div class="pop-main prize-main">
+        <img class="prize-close" src="images/rule-close.png" />
+        <div class="user-msg">
+          <input class="msg name" type="text"/>
+          <input class="msg tel" type="text"/>
+          <input class="msg address" type="text"/>
+        </div>
+        <img class="pop-bg prize-bg" src="images/prize-bg.png" />
+        <img class="pop-btn prize-btn" src="images/prize-btn.png" />
+      </div>
+    </div>
+    
+	</div>
+	
+	<script src="//xz.voicecloud.cn/activity/ai_niu/js/ilingxi-1.0.0.js"></script>
+	<script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+	<script src="js/lib/lxUtil.js"></script>
+	<script src="js/lib/LXData.min.js"></script>
+	<script type="text/javascript">
+	  var lxData = new LXData('773c2fb525481d4d0c8e981c6168c11e'),
+	      channel = lxData.queryUrl('channel'),
+        ua = navigator.userAgent.toLocaleLowerCase(),
+        WEIXIN = /micromessenger/.test(ua),
+        LINGXI = /lingxi/.test(ua),
+        ANDROID = /android/.test(ua),
+        IOS = /iphone/.test(ua);
+	  
+	  lxUtil.isLogin(function (isLogin) {
+	    if (!isLogin) {
+	      $('.pop-login').show();
+	    }
+	  });
+	  
+	  lx.onPageResume({
+      complete: function() {
+        // 登录返回查询剩余次数
+        isBind();
+      }
+    });
+    
+		// 页面点击事件
+    $('.home').on('click', function (e) {
+      var cls = e.target.className;
+      switch (cls){
+        case 'pop-btn go-login':
+          lxData.trackEvent('点击“立即登录”按钮');
+          $('.pop-login').hide();
+          lxUtil.login();
+          break;
+        case 'pop-btn no-login':
+          lxData.trackEvent('点击“暂不登录”按钮');
+          $('.pop-login').hide();
+          break;
+        case 'pop-btn go-bind':
+          lxData.trackEvent('点击“立即绑定”按钮');
+          $('.pop-bind').hide();
+          lxUtil.bind();
+          break;
+        case 'pop-btn no-bind':
+          lxData.trackEvent('点击“暂不绑定”按钮');
+          $('.pop-bind').hide();
+          break;
+        case 'pop-mask':
+          $('.pop').hide();
+          break;
+        case 'pop-btn no-btn':
+          $('.no-prize').hide();
+          break;
+        case 'prize-close':
+          $('.pop-prize').hide();
+          break
+        case 'pop-btn prize-btn':
+          lxData.trackEvent('点击“确定提交”按钮');
+          submitMsg();
+          break;
+      }
+    });
+    
+    if (ANDROID) {
+      $('.pop-prize input').on('focus', function () {
+          $('.prize-main').addClass('prize-focus');
+      });
+      $('.pop-prize input').on('blur', function () {
+          $('.prize-main').removeClass('prize-focus');
+      });
+    }
+    
+    /**
+     * @desc 提交中奖信息
+     */
+    function submitMsg() {
+      var name = $('.name').val().trim(),
+          tel = $('.tel').val().trim(),
+          address = $('.address').val().trim(),
+          telReg = /^1(3|4|5|7|8)[0-9]{9}$/,
+          isTel = telReg.test(tel);
+      if (name === '') {
+        lxUtil.showToast('姓名不能为空！', 'top');
+        return false;
+      }
+      if (name.length > 30) {
+        lxUtil.showToast('姓名不能不能超过30个汉字！', 'top');
+        return false;
+      }
+      for (var i = 0; i < name.length; i++) {
+        if (!/\w/.test(name[i]) && name[i].charCodeAt() < 255) {
+          lxUtil.showToast('姓名不合法！', 'top');
+          return false;
+        }
+      }
+      if (tel === '') {
+        lxUtil.showToast('电话不能为空！', 'top');
+        return false;
+      }
+      if (!isTel) {
+        lxUtil.showToast('请填写正确的手机号！', 'top');
+        return false;
+      }
+      if (address === '') {
+        lxUtil.showToast('地址不能为空！', 'top');
+        return false;
+      }
+      if (address.length > 250) {
+        lxUtil.showToast('地址不能超过125个汉字！', 'top');
+        return false;
+      }
+      if (!/\w/.test(name[i]) && name[i].charCodeAt() < 255) {
+        lxUtil.showToast('地址不合法！', 'top');
+        return false;
+      }
+  
+      var userMsg = {
+        name: name,
+        phone: tel,
+        address: address,
+        recordid: winningrecordid
+      }
+      lxUtil.saveAdderss(base, userMsg, function(res) {
+        $('.catch-celeb').removeClass('celeb-up').hide();
+        if (res.issave === '1') {
+          lxUtil.showToast('提交信息成功', 'top');
+        } else {
+          lxUtil.showToast('提交信息失败', 'top');
+        }
+      });
+      $('.pop-prize').hide();
+    }
+    
+    /**
+     * @desc 是否绑定手机号 
+     */
+    function isBind () {
+      lxUtil.getBase(function (base) {
+        lxUtil.getGameTimes(base, function (res) {
+          if (res.errorcode === '000000') {
+            var gameTimes = parseInt(res.result.leftlotterynum);
+            $('.game-times').text(gameTimes);
+          } else if (res.errorcode === '000005') {
+             $('.pop-bind').show();
+          }
+        });
+      });
+    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+.home { position: relative; width: 10rem; height: 16.08rem; }
+.home .home-btn1, .home .home-btn2 { width: 2.1066666667rem; position: absolute; top: 13rem; left: 4.0533333333rem; z-index: 2; }
+.home .home-btn2 { display: none; }
+.home .play-btn { -webkit-user-select: none; -webkit-touch-callout: none; width: 2.1066666667rem; height: 2.1066666667rem; background: transparent; position: absolute; top: 13rem; left: 4.0533333333rem; z-index: 3; }

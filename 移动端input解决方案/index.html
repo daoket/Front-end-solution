@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="//xz.voicecloud.cn/activity/ai_niu/js/lxadp.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+  </head>
+  <body>
+    <div class="home">
+      <img class="comment-bg" src="images/comment-bg.png"/>
+      <input class="comment-input" type="text" />
+    </div>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+      
+      // ***********************利用scrollIntoView方法移动页面**************************************
+      // 需要input下面的高度高于页面高度
+      $('input').on('focus', function() {
+        $('.home').addClass('home-focus');
+        this.scrollIntoView(true);
+        
+        // 添加scroll方法
+        var scrollTopA = $(document).scrollTop();
+        $(window).on('scroll', function () {
+          var scrollTopB = $(document).scrollTop();
+          if(Math.abs(scrollTopB - scrollTopA) > 10) {
+            $('input').blur();
+          }
+        });
+      });
+      
+      $('input').on('blur', function() {
+        $('.home').removeClass('home-focus');
+        // 移除scroll方法
+        $(window).unbind('scroll');
+      });
+      
+    </script>
+  </body>
+</html>
+

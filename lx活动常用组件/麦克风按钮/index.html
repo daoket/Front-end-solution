@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" type="text/css" href="css/index.css"/>
+  <script src="//xz.voicecloud.cn/activity/ai_niu/js/lxadp.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div class="home">
+    <p class="voice-txt"></p>
+    
+    <!--麦克风-->
+    <div class="play-btn"></div>
+    <img class="home-btn1" src="images/home-voice1.gif"/>
+    <img class="home-btn2" src="images/home-voice2.gif"/>
+  </div>
+  
+  <script src="//xz.voicecloud.cn/activity/ai_niu/js/ilingxi-1.0.0.js"></script>
+  <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+  <script type="text/javascript">
+    
+    // ***********获取录音权限时，快速点击触发touchend事件，长按时触发touchcancel事件*************
+    
+    
+    // 麦克风逻辑
+    $(".play-btn").on('touchstart', function() {
+      // lxData.trackEvent('按住“麦克风”按钮');
+      $('.home-btn1').hide();
+      $('.home-btn2').show();
+      
+      lx.startListenTransfer({
+        engine: 'CN', //CN、EN,不传默认CN
+        isSaveAudio: false //是否保存录音文件
+      });
+    });
+    
+    $(".play-btn").on('touchcancel', function () {
+      $('.home-btn1').show();
+      $('.home-btn2').hide();
+    });
+    
+    $(".play-btn").on('touchend', function() {
+      $('.home-btn1').show();
+      $('.home-btn2').hide();
+      
+      // 识别完成回调
+      lx.stopListenTransfer();// 停止听写
+    });
+    
+    lx.onListenTransfer({
+      complete: function(ret) {
+        var text = ret.rawText, //转写文本内容
+            audioId = ret.audioId;//本地录音文件Id
+        
+        if (text) {
+          $('.voice-txt').text(text);
+        } else {
+          alert('声音再大一点就能听到了!');
+        }
+        
+      },
+      //听写异常
+      fail: function(ret) {
+        var code = ret.code; //错误编码
+      }
+    });
+  </script>
+</body>
+</html>

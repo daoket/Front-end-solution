@@ -1,0 +1,5 @@
+.home-focus { height: 19rem !important; }
+
+.home { height: 31rem; position: relative; }
+.home .comment-bg { width: 9.1066666667rem; margin-left: 0.44rem; }
+.home .comment-input { font-size: 0.4266666667rem; width: 5.3333333333rem; height: 0.5333333333rem; position: absolute; top: 10.4666666667rem; left: 0.9333333333rem; background: transparent; outline: none; }

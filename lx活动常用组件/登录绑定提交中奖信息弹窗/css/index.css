@@ -1,0 +1,15 @@
+.home { position: relative; width: 10rem; height: 16.08rem; font-size: 0; }
+
+.pop { display: none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 9; }
+.pop .login-mask, .pop .bind-mask, .pop .prize-mask, .pop .pop-mask { width: 100%; height: 100%; position: absolute; background: rgba(0, 0, 0, 0.5); }
+.pop .prize-close { width: 0.6533333333rem; position: absolute; top: 0.5333333333rem; right: 1.0666666667rem; z-index: 9; }
+.pop .pop-main { width: 100%; position: absolute; width: 100%; left: 0; top: 30%; text-align: center; z-index: 10; }
+.pop .prize-main { transition: all 0.6s; }
+.pop .prize-focus { transform: translateY(-3rem); }
+.pop .pop-bg { width: 8.76rem; }
+.pop .pop-btn { width: 2.9866666667rem; position: relative; top: -1.2rem; margin: 0 0.4rem; }
+.pop .user-msg { position: absolute; width: 8.76rem; height: 6.1466666667rem; left: 0.6rem; font-size: 0.4266666667rem; padding-left: 0.8rem; }
+.pop .user-msg .msg { width: 5.4rem; height: 0.6666666667rem; background: transparent; color: #fff; text-indent: 0.2666666667rem; border: 0; outline: none; border-radius: 0; -webkit-appearance: none; background-color: transparent; -webkit-tap-highlight-color: transparent; }
+.pop .user-msg .name { margin-top: 2.0666666667rem; }
+.pop .user-msg .tel { margin-top: 0.0933333333rem; }
+.pop .user-msg .address { margin-top: 0.0933333333rem; }

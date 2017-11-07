@@ -1,0 +1,89 @@
+$baseWidth: 750px !default;
+@function bar($px, $base-width:0) {
+    $width: if(unitless($base-width), $baseWidth, $base-width);
+    @return $px*10/$width * 1rem;
+}
+
+.home{
+    position: relative;
+    width: bar(750px);
+    height: bar(1206px);
+    font-size: 0;
+}
+
+.pop {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    .login-mask, .bind-mask, .prize-mask, .pop-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .prize-close{
+        width: bar(49px);
+        position: absolute;
+        top: bar(40px);
+        right: bar(80px);
+        z-index: 9;
+    }
+    .pop-main {
+        width: 100%;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 30%;
+        text-align: center;
+        z-index: 10;
+    }
+    .prize-main{
+        transition: all 0.6s;
+    }
+    .prize-focus{
+        transform: translateY(-3rem);
+    }
+    .pop-bg {
+        width: bar(657px);
+    }
+    .pop-btn {
+        width: bar(224px);
+        position: relative;
+        top: bar(-90px);
+        margin: 0 bar(30px);
+    }
+    .user-msg{
+        position: absolute;
+        width: bar(657px);
+        height: bar(461px);
+        left: bar(45px);
+        font-size: bar(32px);
+        padding-left: bar(60px);
+    }
+    .user-msg .msg {
+        width: bar(405px);
+        height: bar(50px);
+        background: transparent;
+        color: #fff;
+        text-indent: bar(20px);
+        border: 0;
+        outline: none;
+        border-radius: 0;
+        -webkit-appearance: none;
+        background-color: transparent;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .user-msg .name {
+        margin-top: bar(155px);
+    }
+    .user-msg .tel {
+        margin-top: bar(7px);
+    }
+    .user-msg .address {
+        margin-top: bar(7px);
+    }
+}
