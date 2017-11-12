@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style type="text/css">
+    .content{
+      position: relative;
+    }
+    .thumbnails{
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      filter: blur(4px);
+      transition: all 0.7s;
+    }
+    .complete{
+      filter: blur(0);
+    }
+  </style>
+</head>
+<body>
+  
+  <h4>大图片加载从模糊到清晰（刷新页面查看效果）</h4>
+  <div class="content">
+    <img class="thumbnails" src="images/blur.jpg"/>
+  </div>
+  
+  <script type="text/javascript">
+       var ele = document.querySelector('.thumbnails');
+    // 为了看到效果加个延时
+    setTimeout(function(){
+      // 若图片URL失效请自行替换
+      var imgUrl = 'images/clear.jpg';
+      var imgObject = new Image();
+
+      imgObject.src = imgUrl;
+      imgObject.onload = function(){
+        ele.src = imgUrl;
+        ele.setAttribute('class', 'thumbnails complete');
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

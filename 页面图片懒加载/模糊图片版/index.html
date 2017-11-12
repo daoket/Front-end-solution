@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+	<style type="text/css">
+		.demo img {
+        width: 100%;
+        height: 490px;
+      }
+	</style>
+</head>
+<body>
+	 <div class="demo" style="width: 100%; margin: 0 auto;">
+      <img class="lazy" src="images/blur-01.jpg" data-echo="images/big-1.jpg">
+      <img class="lazy" src="images/blur-02.jpg" data-echo="images/big-2.jpg">
+      <img class="lazy" src="images/blur-03.jpg" data-echo="images/big-3.jpg">
+      <img class="lazy" src="images/blur-04.jpg" data-echo="images/big-4.jpg">
+      <img class="lazy" src="images/blur-05.jpg" data-echo="images/big-5.jpg">
+      <img class="lazy" src="images/blur-06.jpg" data-echo="images/big-6.jpg">
+      <img class="lazy" src="images/blur-07.jpg" data-echo="images/big-7.jpg">
+    </div>
+   <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+	 <script src="js/echo.min.js"></script>
+    <script type="text/javascript">
+    	Echo.init({offset: 0, throttle: 0});
+    </script>
+</body>
+</html>
