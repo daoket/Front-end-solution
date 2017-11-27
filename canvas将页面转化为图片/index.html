@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style type="text/css">
+    	#showImg{
+    	  width: 375px;
+    	}
+    	#hideCanvas{
+    	  width: 100%;
+    	}
+    </style>
+  </head>
+
+  <body>
+    <button>点击生成图片</button>
+    
+    <canvas id="hideCanvas"></canvas>
+    <img id="showImg" src="images/nannan.jpg" />
+
+    <div class="endArticle">
+      <div id="poemTitle">
+        <input class="" value="题目">
+      </div>
+      <div id="poemAuthor">
+        <input class="" value="作者">
+      </div>
+      <div id="poemArticle">
+        <textarea class="">内容</textarea>
+      </div>
+      <p class="tips">小诗妹悄悄告诉你，这里可修改图片，标题和内容哦</p>
+    </div>
+
+    <img id="erCode" src="./images/erwei.jpg" />
+    
+    <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      
+      $('button').on('click', function () {
+          canvasImg(canvasEle, showImg, poemTitle, poemAuthor, poemArticle, erweiCode, infomitions.listname);
+      });
+      
+      var canvasEle = document.getElementById('hideCanvas'); //canvas对象
+      var showImg = document.getElementById('showImg'); // 自定义图片
+      var poemTitle = document.getElementById('poemTitle').getElementsByTagName('input')[0];
+      var poemAuthor = document.getElementById('poemAuthor').getElementsByTagName('input')[0];
+      var poemArticle = document.getElementById('poemArticle').getElementsByTagName('textarea')[0];
+      var erweiCode = document.getElementById('erCode'); //二维码
+
+      var infomitions = {
+        listname: 'zuoshi'
+      };
+
+      function canvasImg(ele, a, b, c, d, e, type) {
+        //canvas绘制图片并存储
+        var articles = "";
+        if(type == 'zuoci') {
+          articles = d.value.toString().split('\n');
+        } else {
+          articles = d.value.toString().split('\n');
+        };
+        var width = document.body.clientWidth;
+        var height = document.body.clientHeight;
+        var txtObj = {
+          title: b.value,
+          authors: c.value,
+          article: articles
+        };
+        var imgObj = {
+          erweiImg: e,
+          showImage: a
+        };
+        var mycanvas = new AikfCanvas(ele, txtObj, imgObj, width, height);
+        mycanvas.init();
+        mycanvas.drawImg(function(data) {
+          console.log(data)
+//        var setStorage = new NextLocation(data, 'set', '', '', 'saveImg.html');
+//        setStorage.myLocal(); //本地存储信息
+        });
+      };
+
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,87 @@
+$baseWidth: 750px !default;
+@function bar($px, $base-width:0) {
+    $width: if(unitless($base-width), $baseWidth, $base-width);
+    @return $px*10/$width * 1rem;
+}
+
+.share-btn{
+    width: 2rem;
+    position: fixed;
+    top: 1rem;
+    right: 0;
+}
+
+.app-share {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 19;
+}
+
+.app-share .mask {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    background: #333;
+    z-index: 100;
+}
+
+.app-share .bk {
+    height: 2.5rem;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    z-index: 101;
+    background: url('../images/share-bg.png') no-repeat;
+    background-size: 100%;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.app-share .bk img{
+    margin: 0 0.5rem;
+}
+.app-share .bk .freind {
+    width: 1.4rem;
+}
+
+.app-share .bk .freind:active {
+    opacity: 0.8;
+}
+
+.app-share .bk .timeline {
+    width: 1.4rem;
+}
+
+.app-share .bk .timeline:active {
+    opacity: 0.8;
+}
+
+.app-share .bk .weibo {
+    width: 1.4rem;
+}
+
+.app-share .bk .weibo:active {
+    opacity: 0.8;
+}
+
+.wx-share {
+    display: none;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+    height: 100%;
+    width: 100%;
+    background: url("../images/wx-share.png") no-repeat;
+    background-size: 100% 100%;
+}

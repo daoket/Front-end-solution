@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+	<style type="text/css">
+		html, body{
+		  height: 100%;
+		}
+		body{
+		  position: relative;
+		  transition: all 0.5s;
+		  -webkit-transition: all 0.5s;
+		}
+		input{
+		  position: absolute;
+		  bottom: 100px;
+		}
+		.focus{
+		  transform: translateY(-200px);
+		  -webkit-transform: translateY(-200px);
+		}
+	</style>
+</head>
+<body>
+	<input type="text" />
+	<script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+	<script type="text/javascript">
+		$('input').on('focus', function () {
+		  $('body').addClass('focus');
+		});
+		$('input').on('blur', function () {
+      $('body').removeClass('focus');
+    });
+	</script>
+</body>
+</html>
