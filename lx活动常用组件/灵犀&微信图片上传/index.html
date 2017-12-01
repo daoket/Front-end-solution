@@ -52,16 +52,17 @@
     </div>
 
     <div class="upload-img">
-    	<img id="showImg" src="" />
+      <img id="showImg" src="" />
     </div>
     
     <button>上传图片</button>
     <script src="//xz.voicecloud.cn/activity/ai_niu/js/lxadp.min.js"></script>
     <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
     <script src="//xz.voicecloud.cn/activity/ai_niu/js/ilingxi-1.0.0.js"></script>
+    <script src="js/config_debug.js"></script>
     <script type="text/javascript">
       $('button').on('click', function() {
-        lxUploadImg();
+        selectPhoto();
       });
 
       var ua = navigator.userAgent.toLocaleLowerCase(),
@@ -105,7 +106,7 @@
             activity: 'yszp'
           };
           $.ajax({
-            url: '//yd.voicecloud.cn/lxactserver/h5/getfileurl',
+            url: CFG.getFileUrl,
             data: argObj,
             type: "POST",
             error: function(data) {
@@ -129,71 +130,96 @@
       }
 
       /**
-       * @desc 利用灵犀能力上传图片 
+       * @desc 利用灵犀和微信能力上传图片 
        */
-      function lxUploadImg() {
-        if(ANDROID) {
-          $("#uploadTip").show();
-        }
-        var reqObj = {
-          count: 1,
-          success: function(data) {
-            var obj = {
-              localId: data.localIds[0],
-              uploadType: 0,
-              success: function(data) {
-                lxUtil.getAPPImgUrl(data.serverId, function(imgUrl) {
-                  $("#uploadTip").hide();
-                  picCenter('#showImg', imgUrl);
-                  sendData = {
-                    imgUrl: imgUrl
-                  };
-                });
-              },
-              fail: function(data) {
-                $("#uploadTip").hide();
-                switch(data.errorCode) {
-                  case 220004:
-                    lxUtil.showToast('图片格式不支持');
-                    break;
-                  case 220005:
-                    lxUtil.showToast('图片过大');
-                    break;
-                  case 220001:
-                    lxUtil.showToast('无SD卡权限');
-                    break;
-                  case 220006:
-                    lxUtil.showToast('上传失败');
-                    break;
-                  default:
-                    lxUtil.showToast('图片上传失败，请检查网络连接');
-                    break;
+      function selectPhoto() {
+        // lxData.trackEvent('点击选取本地照片');
+        if (WEIXIN) {
+          wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function(res) {
+              wx.uploadImage({
+                localId: res.localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function(res) {
+                  var serverId = res.serverId; // 返回图片的服务器端ID
+                  lxUtil.getWXImgUrl(serverId, function(imgUrl) {
+                    $("#uploadTip").hide();
+                    picCenter('#showImg', imgUrl);
+                    sendData = {
+                      imgUrl: imgUrl
+                    };
+                  });
                 }
-              }
-            };
-            lx.uploadImage(obj);
-          },
-          fail: function(data) {
-            $("#uploadTip").hide();
-            switch(data.errorCode) {
-              case 210003:
-                lxUtil.showToast('图片格式不支持');
-                break;
-              case 210004:
-                lxUtil.showToast('图片过大');
-                break;
-              case 210005:
-                lxUtil.showToast('无SD卡权限');
-                break;
-              case 210006:
-                lxUtil.showToast('图片上传失败，请检查网络连接');
-                break;
+              });
             }
-          }
-        };
-        // alert(JSON.stringify(reqObj));
-
-        lx.chooseImage(reqObj);
+          });
+        } else {
+            if(ANDROID){
+                $("#uploadTip").show();
+            }
+          var reqObj = {
+            count: 1,
+            success: function(data) {
+              var obj = {
+                localId: data.localIds[0],
+                uploadType: 0,
+                success: function(data) {
+                  lxUtil.getAPPImgUrl(data.serverId, function(imgUrl) {
+                    $("#uploadTip").hide();
+                    picCenter('#showImg', imgUrl);
+                    sendData = {
+                      imgUrl: imgUrl
+                    };
+                  });
+                },
+                fail: function(data) {
+                  $("#uploadTip").hide();
+                  switch (data.errorCode) {
+                    case 220004:
+                      lxUtil.showToast('图片格式不支持');
+                      break;
+                    case 220005:
+                      lxUtil.showToast('图片过大');
+                      break;
+                    case 220001:
+                      lxUtil.showToast('无SD卡权限');
+                      break;
+                    case 220006:
+                      lxUtil.showToast('上传失败');
+                      break;
+                    default:
+                      lxUtil.showToast('图片上传失败，请检查网络连接');
+                      break;
+                  }
+                }
+              };
+              lx.uploadImage(obj);
+            },
+            fail: function(data) {
+              $("#uploadTip").hide();
+              switch (data.errorCode) {
+                case 210003:
+                  lxUtil.showToast('图片格式不支持');
+                  break;
+                case 210004:
+                  lxUtil.showToast('图片过大');
+                  break;
+                case 210005:
+                  lxUtil.showToast('无SD卡权限');
+                  break;
+                case 210006:
+                  lxUtil.showToast('图片上传失败，请检查网络连接');
+                  break;
+              }
+            }
+          };
+          // alert(JSON.stringify(reqObj));
+    
+          lx.chooseImage(reqObj);
+        }
       }
       /**
        * @desc 图片居中
