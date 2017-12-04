@@ -12,6 +12,14 @@
 	<!--首页-->
   <div class="home">
     <img class="home-btn" src="images/home-btn.png"/>
+    <img class="home-btn1" src="images/home-btn.png"/>
   </div>
+  <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+  <script type="text/javascript">
+    // 兼容IOS translateY失效问题
+  	setTimeout(function () {
+        $('.home-btn1').show().addClass('moveup');
+    }, 100);
+  </script>
 </body>
 </html>

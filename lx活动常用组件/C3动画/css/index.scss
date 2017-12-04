@@ -12,11 +12,10 @@ $baseWidth: 750px !default;
         position: absolute;
         top: 12rem;
         left: 2.6666666667rem;
-        
+        display: none;
         -webkit-animation: shake .5s ease-in-out 1s infinite;
         animation: shake .5s ease-in-out 1s infinite;
     }
-    
     @-webkit-keyframes shake {
         0% {
             -webkit-transform: scale(1);
@@ -31,7 +30,6 @@ $baseWidth: 750px !default;
             -webkit-filter: brightness(1);
         }
     }
-
     @keyframes shake {
         0% {
             transform: scale(1);
@@ -44,6 +42,36 @@ $baseWidth: 750px !default;
         100% {
             transform: scale(1);
             filter: brightness(1);
+        }
+    }
+    .home-btn1 {
+        width: 4.6666666667rem;
+        position: absolute;
+        top: 12rem;
+        left: 2.6666666667rem;
+    }
+    .moveup{
+        animation: delay 1s ease 1 forwards;
+        -webkit-animation: delay 1s ease 1 forwards;
+    }
+    @-webkit-keyframes delay {
+        0% {
+            opacity: 0;
+            -webkit-transform: perspective(500px) translateY(100%);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: perspective(500px) translateY(0);
+        }
+    }
+    @keyframes delay {
+        0% {
+            opacity: 0;
+            transform: perspective(500px) translateY(100%);
+        }
+        100% {
+            opacity: 1;
+            transform: perspective(500px) translateY(0);
         }
     }
 }
