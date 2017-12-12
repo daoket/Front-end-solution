@@ -31,7 +31,7 @@
     
     
     // 麦克风逻辑
-    $(".play-btn").on('touchstart', function() {
+    $(".play-btn").on('touchstart', function(e) {
       // lxData.trackEvent('按住“麦克风”按钮');
       $('.home-btn1').hide();
       $('.home-btn2').show();
@@ -47,6 +47,7 @@
         });
       } else {
         wx.startRecord();
+        e.preventDefault(); // 防止微信中长按出现菜单
       }
     });
     
