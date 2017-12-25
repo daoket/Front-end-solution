@@ -1,0 +1,46 @@
+$baseWidth: 750px !default;
+@function bar($px, $base-width:0) {
+    $width: if(unitless($base-width), $baseWidth, $base-width);
+    @return $px*10/$width * 1rem;
+}
+
+.home{
+    position: relative;
+    width: bar(750px);
+    height: bar(1206px);
+    font-size: 0;
+}
+
+.pop {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    .login-mask, .bind-mask, .prize-mask, .pop-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .pop-main {
+        width: 100%;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 30%;
+        text-align: center;
+        z-index: 10;
+    }
+    .pop-bg {
+        width: bar(657px);
+    }
+    .pop-btn {
+        width: bar(224px);
+        position: relative;
+        top: bar(-90px);
+        margin: 0 bar(30px);
+    }
+}

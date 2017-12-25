@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<script src="//xz.voicecloud.cn/activity/ai_niu/js/lxadp.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<title>Document</title>
+</head>
+<body>
+	<div class="home">
+	  
+	  <span style="font-size: 16px;" class="game-times">0</span>
+	  
+	  
+	  
+	  
+		<!--登录弹窗-->
+    <div class="pop pop-login">
+      <div class="login-mask"></div>
+      <div class="pop-main">
+        <img class="pop-bg" src="images/pop-login.png" />
+        <img class="pop-btn go-login" src="images/go-login.png" />
+        <img class="pop-btn no-login" src="images/no-login.png" />
+      </div>
+    </div>
+    
+    <!--绑定弹窗-->
+    <div class="pop pop-bind">
+      <div class="bind-mask"></div>
+      <div class="pop-main">
+        <img class="pop-bg" src="images/pop-bind.png" />
+        <img class="pop-btn go-bind" src="images/go-bind.png" />
+        <img class="pop-btn no-bind" src="images/no-bind.png" />
+      </div>
+    </div>
+
+
+
+
+	</div>
+	
+	<script src="//xz.voicecloud.cn/activity/ai_niu/js/ilingxi-1.0.0.js"></script>
+	<script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+	<script src="js/lib/lxUtil.js"></script>
+	<script src="js/lib/LXData.min.js"></script>
+	<script type="text/javascript">
+	  var lxData = new LXData('773c2fb525481d4d0c8e981c6168c11e'),
+	      channel = lxData.queryUrl('channel'),
+        ua = navigator.userAgent.toLocaleLowerCase(),
+        WEIXIN = /micromessenger/.test(ua),
+        LINGXI = /lingxi/.test(ua),
+        ANDROID = /android/.test(ua),
+        IOS = /iphone/.test(ua);
+	  
+	  
+    // 登录绑定逻辑
+	  (function () {
+  	  lxUtil.isLogin(function (isLogin) {
+  	    if (!isLogin) {
+  	      $('.pop-login').show();
+  	    }
+  	  });
+  	  
+  	  lx.onPageResume({
+        complete: function() {
+          // 登录返回查询剩余次数
+          isBind();
+        }
+      });
+      
+  		// 页面点击事件
+      $('.home').on('click', function (e) {
+        var cls = e.target.className;
+        switch (cls){
+          case 'pop-btn go-login':
+            lxData.trackEvent('点击“立即登录”按钮');
+            $('.pop-login').hide();
+            lxUtil.login();
+            break;
+          case 'pop-btn no-login':
+            lxData.trackEvent('点击“暂不登录”按钮');
+            $('.pop-login').hide();
+            break;
+          case 'pop-btn go-bind':
+            lxData.trackEvent('点击“立即绑定”按钮');
+            $('.pop-bind').hide();
+            lxUtil.bind();
+            break;
+          case 'pop-btn no-bind':
+            lxData.trackEvent('点击“暂不绑定”按钮');
+            $('.pop-bind').hide();
+            break;
+          case 'pop-mask':
+            $('.pop').hide();
+            break;
+        }
+      });
+      /**
+       * @desc 是否绑定手机号 
+       */
+      function isBind () {
+        lxUtil.getBase(function (base) {
+          lxUtil.getGameTimes(base, function (res) {
+            if (res.errorcode === '000000') {
+              var gameTimes = parseInt(res.result.leftlotterynum);
+              $('.game-times').text(gameTimes);
+            } else if (res.errorcode === '000005') {
+               $('.pop-bind').show();
+            }
+          });
+        });
+      }
+	  })();
+	  
+	</script>
+</body>
+</html>
