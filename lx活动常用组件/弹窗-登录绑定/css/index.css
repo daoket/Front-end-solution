@@ -1,0 +1,7 @@
+.home { position: relative; width: 10rem; height: 16.08rem; font-size: 0; }
+
+.login-bind { width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 9; }
+.login-bind .login-mask, .login-bind .bind-mask { width: 100%; height: 100%; position: absolute; background: rgba(0, 0, 0, 0.5); }
+.login-bind .pop-main { width: 100%; position: absolute; width: 100%; left: 0; top: 30%; text-align: center; z-index: 10; }
+.login-bind .pop-bg { width: 8.76rem; }
+.login-bind .pop-btn { width: 2.9866666667rem; position: relative; top: -1.2rem; margin: 0 0.4rem; }

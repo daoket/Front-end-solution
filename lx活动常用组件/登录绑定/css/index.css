@@ -1,7 +1,0 @@
-.home { position: relative; width: 10rem; height: 16.08rem; font-size: 0; }
-
-.pop { display: none; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 9; }
-.pop .login-mask, .pop .bind-mask, .pop .prize-mask, .pop .pop-mask { width: 100%; height: 100%; position: absolute; background: rgba(0, 0, 0, 0.5); }
-.pop .pop-main { width: 100%; position: absolute; width: 100%; left: 0; top: 30%; text-align: center; z-index: 10; }
-.pop .pop-bg { width: 8.76rem; }
-.pop .pop-btn { width: 2.9866666667rem; position: relative; top: -1.2rem; margin: 0 0.4rem; }

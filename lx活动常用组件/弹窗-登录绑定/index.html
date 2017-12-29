@@ -17,7 +17,7 @@
 	  
 	  
 		<!--登录弹窗-->
-    <div class="pop pop-login">
+    <div class="login-bind pop-login">
       <div class="login-mask"></div>
       <div class="pop-main">
         <img class="pop-bg" src="images/pop-login.png" />
@@ -27,7 +27,7 @@
     </div>
     
     <!--绑定弹窗-->
-    <div class="pop pop-bind">
+    <div class="login-bind pop-bind">
       <div class="bind-mask"></div>
       <div class="pop-main">
         <img class="pop-bg" src="images/pop-bind.png" />
@@ -56,7 +56,7 @@
 	  
 	  
     // 登录绑定逻辑
-	  (function () {
+	  !function () {
   	  lxUtil.isLogin(function (isLogin) {
   	    if (!isLogin) {
   	      $('.pop-login').show();
@@ -71,7 +71,7 @@
       });
       
   		// 页面点击事件
-      $('.home').on('click', function (e) {
+      $('.login-bind').on('click', function (e) {
         var cls = e.target.className;
         switch (cls){
           case 'pop-btn go-login':
@@ -112,7 +112,7 @@
           });
         });
       }
-	  })();
+	  }();
 	  
 	</script>
 </body>

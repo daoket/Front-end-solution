@@ -11,15 +11,14 @@ $baseWidth: 750px !default;
     font-size: 0;
 }
 
-.pop {
-    display: none;
+.login-bind {
     width: 100%;
     height: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 9;
-    .login-mask, .bind-mask, .prize-mask, .pop-mask{
+    .login-mask, .bind-mask{
         width: 100%;
         height: 100%;
         position: absolute;
