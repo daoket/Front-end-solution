@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3Dmap</title>
+    <style>
+        body{
+            margin: 0;
+        }
+       #canvasBox{width:100%;height:99.5%;position: absolute;}
+    </style>
+</head>
+<body>
+<div id="canvasBox"></div>
+<script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+    var canvasBox = document.getElementById("canvasBox");
+    var W = $("#canvasBox").width();
+    var H = $("#canvasBox").height();
+    //随浏览器窗口变化而变化
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+    $(window).on("resize",function(){
+        onWindowResize(); // 设置画布的宽高等于webview的宽高，并设置监听事件，如果窗口变化重新设置宽高
+    })
+    var num = 0;
+    var scene,camera,renderer,light; // 定义场景scene， 相机camera 渲染renderer 灯光light四个变量
+    function intScene(){ // 利用THREE.Scene()初始化场景
+        scene = new THREE.Scene();
+    }
+    function intCamera(){ // 利用THREE的PerspectiveCamera() 初始化相机 设置相机的position up lookAt
+        camera = new THREE.PerspectiveCamera(45,W/H,1,1000);
+        camera.position.set(0,0,400);
+        camera.up.set(0,1,0);
+        camera.lookAt({x:0,y:0,z:0})
+    }
+    function intRender(){ // 利用THREE的WebGLRenderer()进行渲染 利用setSize() 设置渲染的尺寸
+        renderer = new THREE.WebGLRenderer({antialias:true});
+       //renderer = new THREE.CanvasRenderer();
+        renderer.setSize(W,H);
+        canvasBox.appendChild(renderer.domElement); // 将渲染结果添加到div中
+    }
+    function intLight(){ // 利用THREE的DirectionalLight() 初始化灯光 光源  通过position 设置灯光位置，通过add天剑灯光到场景scene中
+        light=new THREE.DirectionalLight(0xffffff,0.6); // 平行光 定向光源
+        light.position.set(0,0,400);
+        scene.add(light);
+    }
+    var xkbg,earth,texts; //
+    function intModels(){ // 设置背景图
+        /* 宇宙背景 */
+        var yz_geometry = new THREE.SphereGeometry(500,500,50); // 通过THREE的SphereGeomotry() 设置位置 sphere 球体 范围
+        var yz_material = new THREE.MeshPhongMaterial({ // 通过THREE的MeshPhongMaterial 设置需要的背景图和尺寸
+            map:THREE.ImageUtils.loadTexture('images/bg_loading.png'),
+            side: THREE.DoubleSide // 通过THREE的DoubleSize设置尺寸
+        });
+        xkbg= new THREE.Mesh(yz_geometry,yz_material); // 将geometry和material传入THREE.Mesh()中渲染 设置位置添加到scene中
+        xkbg.position.set(0,0,0);
+        scene.add(xkbg);
+        //地球
+        var earth_geometry = new THREE.SphereGeometry(100,50,50); // 通过THREE的SphereGeometry() 和THREE的MeshPhongMaterial() 设置geometry和material 通过THREE.Mesh
+        var earth_material = new THREE.MeshPhongMaterial({ // 渲染添加到scene中
+            map:THREE.ImageUtils.loadTexture('images/earth.jpg'),
+            side: THREE.DoubleSide
+        });
+        earth= new THREE.Mesh(earth_geometry,earth_material);
+        earth.position.set(0,0,0);
+        xkbg.add(earth);
+    }
+    var mouseX,mouseY,isMove=true; // 定义鼠标的位置和是否移动的flag
+    //自转
+    function zizhuan(){
+        if(isMove){
+            requestAnimationFrame(zizhuan); // 使用requestAnimationFrame() 设置自传动画
+            xkbg.rotation.y-=0.002;
+            renderer.render(scene,camera); // 将scene和camera传入renderer.render中在secede中渲染camera
+        }
+    }
+    //拖拽
+    document.onmousedown = function(e){ // 定义按下事件
+        isMove = false;
+        mouseX = e.pageX;
+        mouseY = e.pageY;
+    }
+    document.onmousemove = function rt(e){ // 定义移动事件 和旋转角度
+        if(!isMove){
+            var disX = e.pageX - mouseX;
+            var disY = e.pageY - mouseY;
+            requestAnimationFrame(zizhuan);
+            xkbg.rotation.x = xkbg.rotation.x>0.8?0.8:xkbg.rotation.x;
+            xkbg.rotation.x = xkbg.rotation.x<-0.8?-0.8:xkbg.rotation.x;
+            xkbg.rotation.x+= disY*0.00005* Math.PI;
+            xkbg.rotation.y+= disX*0.0001* Math.PI;
+            renderer.render(scene,camera); // 调用render重新渲染
+        }
+    }
+    document.onmouseup = function(){
+        console.log(xkbg.rotation.y)
+        isMove = true;
+        setTimeout(function(){
+            zizhuan();
+        },2000)
+    }
+    //滑动鼠标让地球放大缩小
+    function intsScale(){
+        $(document).on('mousewheel DOMMouseScroll', function (ev){
+            var e = ev||event;
+            e.preventDefault();
+            var value = e.originalEvent.wheelDelta || -e.originalEvent.detail;
+            var delta = Math.max(-1, Math.min(1, value));
+            if(delta == 1){
+                num++;
+              num=num>10?10:num;
+            }else {
+                num--;
+                num = num < -15 ? -15 : num;
+            }
+            camera.position.set(0,0,400+num*10); // 调用camera的position方法设置地球的大小
+        });
+    }
+    function intStart(){ // 执行初始化场景scene 初始化相机camera 初始化渲染render 初始化灯光light 初始化背景 和地球 执行自传方法 初始化缩放方法  调用render 重新渲染
+        intScene();
+        intCamera();
+        intRender();
+        intLight();
+        intModels();
+        zizhuan();
+        intsScale();
+        renderer.render(scene,camera);
+    }
+    intStart(); // 执行开始方法
+</script>
+</body>
+</html>
