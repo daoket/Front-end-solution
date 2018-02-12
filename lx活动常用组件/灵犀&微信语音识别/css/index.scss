@@ -8,15 +8,15 @@ $baseWidth: 750px !default;
     position: relative;
     width: bar(750px);
     height: bar(1206px);
-    .home-btn1,
-    .home-btn2 {
+    .home-mic,
+    .home-mic-run {
         width: bar(158px);
         position: absolute;
         top: bar(975px);
         left: bar(304px);
         z-index: 2;
     }
-    .home-btn2 {
+    .home-mic-run {
         display: none;
     }
     .play-btn {

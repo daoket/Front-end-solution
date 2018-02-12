@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+
+    <audio src="//xz.voicecloud.cn/activity/ai_niu/res/Five-Hundred-Miles.mp3" controls="controls" autoplay="autoplay"></audio>
+
+    <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script type="text/javascript">
+      $(document).on('visibilitychange', function() {
+        var audio = document.querySelector('audio');
+        if(document.hidden) {
+          audio.pause();
+          console.log("页面非激活,暂定播放");
+        } else {
+          audio.play();
+          console.log("页面激活， 继续播放")
+        }
+      });
+    </script>
+  </body>
+
+</html>
