@@ -7,6 +7,9 @@
 * [凹凸实验室](https://aotu.io)
 * [es6入门](http://es6.ruanyifeng.com)
 * [layabox](https://ldc.layabox.com/doc/?nav=zh-js-0-3-0)
+* [汤姆大叔的博客](http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html)
+* [vue&koa](https://github.com/berwin/Blog/issues)
+
 
 ### 库和文档
 * [vue源码](https://github.com/vuejs/vue)
