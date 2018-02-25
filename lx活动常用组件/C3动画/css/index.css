@@ -1,3 +1,18 @@
+.mute1, .mute2{width: 1rem; position: fixed; top: 0.5rem; right: 0.5rem; z-index: 5;}
+.mute1{
+    -webkit-animation:circle 3s infinite linear;/*匀速 循环*/
+    animation:circle 3s infinite linear;/*匀速 循环*/
+}
+.mute2{display: none; z-index: 6;}
+
+@keyframes circle{
+    0%{ transform:rotate(0deg); }
+    100%{ transform:rotate(360deg); }
+}
+@-webkit-keyframes circle{
+    0%{ -webkit-transform:rotate(0deg); }
+    100%{ -webkit-transform:rotate(360deg); }
+} 
 .home { height: 16.08rem; position: relative; }
 .home .home-btn { width: 4.6666666667rem; position: absolute; top: 12rem; left: 2.6666666667rem; display: none; -webkit-animation: shake .5s ease-in-out 1s infinite; animation: shake .5s ease-in-out 1s infinite; }
 @-webkit-keyframes shake { 0% { -webkit-transform: scale(1); -webkit-filter: brightness(1); }

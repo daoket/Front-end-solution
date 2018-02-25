@@ -4,6 +4,22 @@ $baseWidth: 750px !default;
     @return $px*10/$width * 1rem;
 }
 
+.mute1, .mute2{width: 1rem; position: fixed; top: 0.5rem; right: 0.5rem; z-index: 5;}
+.mute1{
+    -webkit-animation:circle 3s infinite linear;/*匀速 循环*/
+    animation:circle 3s infinite linear;/*匀速 循环*/
+}
+.mute2{display: none; z-index: 6;}
+
+@keyframes circle{
+    0%{ transform:rotate(0deg); }
+    100%{ transform:rotate(360deg); }
+}
+@-webkit-keyframes circle{
+    0%{ -webkit-transform:rotate(0deg); }
+    100%{ -webkit-transform:rotate(360deg); }
+} 
+
 .home {
     height: bar(1206px);
     position: relative;
@@ -50,7 +66,7 @@ $baseWidth: 750px !default;
         top: 12rem;
         left: 2.6666666667rem;
     }
-    .moveup{
+    .moveup {
         animation: delay 1s ease 1 forwards;
         -webkit-animation: delay 1s ease 1 forwards;
     }
