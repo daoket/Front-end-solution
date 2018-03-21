@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+  
+  <!--同直接引入crypto-js.min.js 效果相同-->
+  <script type="text/javascript" src="./aes.js"></script>
+  <script type="text/javascript" src="./md5.js"></script>
+  <script>
+    //aes加密
+    function encryptByAes(word, secret) {
+      var secretKey = CryptoJS.MD5(secret).toString().substr(8, 16);
+      var secretiv = secretKey;
+      var key = CryptoJS.enc.Utf8.parse(secretKey);
+      var iv = key; //CryptoJS.enc.Utf8.parse(secretKey);
+      var encrypted = '';
+      if(typeof(word) == 'string') {
+        var srcs = CryptoJS.enc.Utf8.parse(word);
+        encrypted = CryptoJS.AES.encrypt(srcs, key, {
+          iv: iv,
+          mode: CryptoJS.mode.CBC,
+          padding: CryptoJS.pad.Pkcs7
+        });
+      } else if(typeof(word) == 'object') { //对象格式的转成json字符串
+        data = JSON.stringify(word);
+        var srcs = CryptoJS.enc.Utf8.parse(data);
+        encrypted = CryptoJS.AES.encrypt(srcs, key, {
+          iv: iv,
+          mode: CryptoJS.mode.CBC,
+          padding: CryptoJS.pad.Pkcs7
+        })
+      }
+      return encrypted.toString();
+    }
+    console.log(encryptByAes('严防发生的', 'lingxdes'))
+  </script>
+</body>
+</html>
