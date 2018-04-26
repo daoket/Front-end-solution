@@ -1,7 +1,7 @@
 var ua = navigator.userAgent.toLocaleLowerCase(),
   LINGXI = /lingxi/.test(ua),
   WEIXIN = /micromessenger/.test(ua);
-
+  
 // ***********获取录音权限时，快速点击触发touchend事件，长按时触发touchcancel事件*************
 /**
  * @desc 处理语音识别的文本文本
@@ -70,7 +70,7 @@ function endVoice() {
       }
     }, 6000);
     
-    lx.stopRecord();
+    lx.stopRecord(); // 停止录音
   }
   /**
    * @desc 结束微信语音识别
@@ -119,6 +119,7 @@ function lxRecordCallback() {
   lx.onRecordStatus({
     success: function(ret) {
       audioId = ret.audioId; //本地录音文件Id 
+      alert(audioId)
       uploadAudio(audioId)
     },
     fail: function(ret) {
@@ -144,6 +145,8 @@ function lxVoiceCallback() {
         type: '2' // 1.网络文件, 2.本地文件
       });
       
+      lx.cancelListenTransfer()
+      
       // IOS无法获取audioId
       uploadAudio(audioId)
         
@@ -164,4 +167,4 @@ $(".play-btn")
   .on('touchend', endVoice);
   
 LINGXI && lxVoiceCallback();
-//  LINGXI && lxRecordCallback();
+//LINGXI && lxRecordCallback();
