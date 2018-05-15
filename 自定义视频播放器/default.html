@@ -1,0 +1,274 @@
+<style>
+.html,body{
+    padding:0;
+    margin: 0;
+}
+.mod-public-videoplay {
+    z-index: 8;
+    width:500px;
+    height:375px;
+    position: fixed;
+    left:50%;
+    top:50%;
+    margin-top:-188px;
+    margin-left:-250px;
+    background-color: black;
+    .close{
+        opacity: .50;
+        filter:alpha(opacity=50);
+        position: absolute;
+        right:-37px;
+        top:0px;
+        width:37px;
+        height:37px;
+        background-color:#000;
+        position: absolute;
+        cursor: pointer;
+        .x{
+            width:17px;
+            height: 17px;
+            margin: 10px;
+            background: url(img/close.png) no-repeat center center;
+        }
+    }
+    .close:hover .x{
+        background: url(img/close-hover.png) no-repeat center center;
+    }
+
+    .close:active .x{
+        background: url(img/close-active.png) no-repeat center center;
+    }
+
+    #hiclubplayer{
+        display: none;
+
+    }
+    #html5VideoPlayer{
+        display: none;
+    }
+
+}
+
+
+/* 工具栏外部容器 */
+.html5-player-toolbar{
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none; 
+    width:500px;
+    height:36px;
+    position: absolute;
+    bottom: 0px;
+    opacity: .9;
+    filter:alpha(opacity=90);
+}
+
+.html5-player-toolbar-back{
+    width:498px;
+    height:34px;
+    border: 1px solid transparent;
+}
+
+#voiceWrap{
+    float: left;
+    margin-left: 10px;
+    width:100px;
+    height:2px;
+    cursor: pointer;
+    background-color:#939393;
+    margin-top:18px;
+    position: relative;
+}    
+
+#videoCircle{
+    cursor: pointer;
+    position: absolute;
+    top:-5px;
+    width:10px;
+    height:10px;
+    border-radius: 180px;
+    background-color:white;
+}
+
+#voiceLoad{
+    height:2px;
+    width:0px;
+    background-color:#ff4987;
+}
+
+
+#filmWrap{
+    width:500px;
+    height:2px;
+    background-color:#939393;
+    position: relative;
+    cursor: pointer;
+}    
+
+#filmCircle{
+    position: absolute;
+    top:-5px;
+    width:10px;
+    height:10px;
+    border-radius: 180px;
+    background-color:white;
+    cursor: pointer;
+}
+
+#filmLoad{
+    height:2px;
+    width:0px;
+    background-color:#ff4987;
+}
+
+
+
+
+
+/* 继续按钮 */
+.continue{
+    display: none;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-left:10px;
+    float:left;
+    background: url(img/continue-normal.png);
+}
+
+.continue:hover{
+    background: url(img/continue-hover.png);
+}
+
+.continue:active{
+    background: url(img/continue-active.png);
+}
+
+/* 暂停按钮 */
+.stop{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-left:10px;
+    background: url(img/stop-normal.png);
+}
+
+.stop:hover{
+    background: url(img/stop-hover.png);
+}
+
+.stop:active{
+    background: url(img/stop-active.png);
+}
+
+/* 播放时间容器 */
+.video-time-show{
+    float:left;
+    color:white;
+    margin:10px 10px;
+}
+
+/* 静音图标 */
+.voice-icon{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    background: url(img/sound-normal.png);
+}
+
+.voice-icon:hover{
+    background: url(img/sound-hover.png);
+}
+
+.voice-icon:active{
+    background: url(img/sound-active.png);
+}
+
+
+/* 解除静音 */
+.voice-icon-no{
+    float:left;
+    width:20px;
+    display: none;
+    height:20px;
+    margin-top: 9px;
+    background: url(img/nosound-normal.png) 1px 0px;
+}
+
+.voice-icon-no:hover{
+    background: url(img/nosound-hover.png) 1px 0px;
+}
+
+.voice-icon-no:active{
+    background: url(img/nosound-active.png) 1px 0px;
+}
+
+/* voice-allscreem 全屏图标 */
+/* 解除静音 */
+.html5-video-allscreem{
+    float:right;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-right:10px;
+    background: url(img/allscreem-normal.png);
+}
+
+.html5-video-allscreem:hover{
+    background: url(img/allscreem-hover.png);
+}
+
+.html5-video-allscreem:active{
+    background: url(img/allscreem-active.png);
+}
+
+/* 分享按钮 */
+.html5-video-share{
+    float:right;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-right:10px;
+    background: url(img/share-normal.png);
+}
+
+.html5-video-share:hover{
+    background: url(img/share-hover.png);
+}
+
+.html5-video-share:active{
+    background: url(img/share-active.png);
+}
+
+
+</style>
+
+<div class="mod-public-videoplay" id="modPublicVideoPlay">
+    <video id="html5VideoPlayer" width="100%" height="100%" src="testvideo.mp4" autoplay="autoplay" loop="loop" controls="true">
+    您的浏览器不支持 video 标签。
+    </video>
+
+</div>
+
+<script>
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

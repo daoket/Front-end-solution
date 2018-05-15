@@ -1,0 +1,595 @@
+<style>
+.html,body{
+    padding:0;
+    margin: 0;
+}
+.mod-public-videoplay {
+    z-index: 8;
+    width:500px;
+    height:375px;
+    position: fixed;
+    left:50%;
+    top:50%;
+    margin-top:-188px;
+    margin-left:-250px;
+    background-color: black;
+    .close{
+        opacity: .50;
+        filter:alpha(opacity=50);
+        position: absolute;
+        right:-37px;
+        top:0px;
+        width:37px;
+        height:37px;
+        background-color:#000;
+        position: absolute;
+        cursor: pointer;
+        .x{
+            width:17px;
+            height: 17px;
+            margin: 10px;
+            background: url(img/close.png) no-repeat center center;
+        }
+    }
+    .close:hover .x{
+        background: url(img/close-hover.png) no-repeat center center;
+    }
+
+    .close:active .x{
+        background: url(img/close-active.png) no-repeat center center;
+    }
+
+    #hiclubplayer{
+        display: none;
+
+    }
+    #html5VideoPlayer{
+        display: none;
+    }
+
+}
+
+
+/* 工具栏外部容器 */
+.html5-player-toolbar{
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none; 
+    width:500px;
+    height:36px;
+    position: absolute;
+    bottom: 0px;
+    opacity: .9;
+    filter:alpha(opacity=90);
+}
+
+.html5-player-toolbar-back{
+    width:498px;
+    height:34px;
+    border: 1px solid transparent;
+}
+
+#voiceWrap{
+    float: left;
+    margin-left: 10px;
+    width:100px;
+    height:2px;
+    cursor: pointer;
+    background-color:#939393;
+    margin-top:18px;
+    position: relative;
+}    
+
+#videoCircle{
+    cursor: pointer;
+    position: absolute;
+    top:-5px;
+    width:10px;
+    height:10px;
+    border-radius: 180px;
+    background-color:white;
+}
+
+#voiceLoad{
+    height:2px;
+    width:0px;
+    background-color:#ff4987;
+}
+
+
+#filmWrap{
+    width:500px;
+    height:2px;
+    background-color:#939393;
+    position: relative;
+    cursor: pointer;
+}    
+
+#filmCircle{
+    position: absolute;
+    top:-5px;
+    width:10px;
+    height:10px;
+    border-radius: 180px;
+    background-color:white;
+    cursor: pointer;
+}
+
+#filmLoad{
+    height:2px;
+    width:0px;
+    background-color:#ff4987;
+}
+
+
+
+
+
+/* 继续按钮 */
+.continue{
+    display: none;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-left:10px;
+    float:left;
+    background: url(img/continue-normal.png);
+}
+
+.continue:hover{
+    background: url(img/continue-hover.png);
+}
+
+.continue:active{
+    background: url(img/continue-active.png);
+}
+
+/* 暂停按钮 */
+.stop{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-left:10px;
+    background: url(img/stop-normal.png);
+}
+
+.stop:hover{
+    background: url(img/stop-hover.png);
+}
+
+.stop:active{
+    background: url(img/stop-active.png);
+}
+
+/* 播放时间容器 */
+.video-time-show{
+    float:left;
+    color:white;
+    margin:10px 10px;
+}
+
+/* 静音图标 */
+.voice-icon{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    background: url(img/sound-normal.png);
+}
+
+.voice-icon:hover{
+    background: url(img/sound-hover.png);
+}
+
+.voice-icon:active{
+    background: url(img/sound-active.png);
+}
+
+
+/* 解除静音 */
+.voice-icon-no{
+    float:left;
+    width:20px;
+    display: none;
+    height:20px;
+    margin-top: 9px;
+    background: url(img/nosound-normal.png) 1px 0px;
+}
+
+.voice-icon-no:hover{
+    background: url(img/nosound-hover.png) 1px 0px;
+}
+
+.voice-icon-no:active{
+    background: url(img/nosound-active.png) 1px 0px;
+}
+
+/* voice-allscreem 全屏图标 */
+/* 解除静音 */
+.html5-video-allscreem{
+    float:right;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-right:10px;
+    background: url(img/allscreem-normal.png);
+}
+
+.html5-video-allscreem:hover{
+    background: url(img/allscreem-hover.png);
+}
+
+.html5-video-allscreem:active{
+    background: url(img/allscreem-active.png);
+}
+
+/* 分享按钮 */
+.html5-video-share{
+    float:right;
+    width:20px;
+    height:20px;
+    margin-top: 9px;
+    margin-right:10px;
+    background: url(img/share-normal.png);
+}
+
+.html5-video-share:hover{
+    background: url(img/share-hover.png);
+}
+
+.html5-video-share:active{
+    background: url(img/share-active.png);
+}
+
+
+</style>
+
+<div class="mod-public-videoplay" id="modPublicVideoPlay">
+    <video id="html5VideoPlayer" width="100%" height="100%" src="testvideo.mp4" autoplay="autoplay" loop="loop" >
+    您的浏览器不支持 video 标签。
+    </video>
+    <!-- 播放器工具栏 -->
+    <div class= "html5-player-toolbar">
+        <!-- 视频滑块容器 -->
+        <div id = "filmWrap">
+            <!-- 视频滑块轨道 -->
+            <div id="filmLoad">
+                <!-- 视频滑块句柄 -->
+                <div id="filmCircle"></div>
+            </div>
+        </div>
+
+        <!-- 工具栏其他UI -->
+        <div class = "html5-player-toolbar-back">
+            <!-- 停止 -->
+            <div id="html5PlayerToolbarStop" class="stop" onclick="pause()"></div>
+            <!-- 继续 -->
+            <div id="html5PlayerToolbarContinue" class="continue" onclick="play()"></div>
+            <!-- 时间 -->
+            <div class="video-time-show">
+                <span id = "currentTime">00:00</span>/<span id="duration">00:00</span>
+            </div>
+            <!-- 声音标识 -->
+            <div class="voice-icon" id="voiceIcon" onclick="nosound()"></div>
+            <div class="voice-icon-no" id="voiceIconNo" onclick="nosound()"></div>
+
+            <!-- 声音滑块容器 -->
+            <div id = "voiceWrap">
+                <!-- 声音滑块轨道 -->
+                <div id="voiceLoad">
+                    <!-- 声音滑块句柄 -->
+                    <div id="videoCircle"></div>
+                </div>
+            </div>
+
+            <!-- 全屏标识 -->
+            <div class="html5-video-allscreem" onclick="allscreem()"></div>
+
+            <!-- 分享按钮 -->
+            <div class="html5-video-share" onclick="share()"></div>        
+        </div>
+    </div>
+</div>
+
+<script>
+/*
+方法          属性              事件
+play()      currentSrc      play
+pause()     currentTime     pause
+load()      videoWidth      progress
+canPlayType videoHeight     error
+            duration        timeupdate
+            ended           ended
+            error           abort
+            paused          empty
+            muted           emptied
+            seeking         waiting
+            volume          loadedmetadata
+            height   
+            width    
+notice: 在所有属性中，只有 videoWidth 和 videoHeight 属性是立即可用的。
+在视频的元数据已加载后，其他属性才可用。
+*/    
+// 获取id的某个元素，返回element
+function fid(id){
+    return document.getElementById(id);
+}
+// 获取某个页面元素的距离
+function getPoint(obj) { 
+    //获取某元素以浏览器左上角为原点的坐标
+    var t = obj.offsetTop; 
+    //获取该元素对应父容器的上边距
+    var l = obj.offsetLeft; 
+    //对应父容器的上边距
+    //判断是否有父容器，如果存在则累加其边距
+    while (obj = obj.offsetParent) {
+    //等效 obj = obj.offsetParent;while (obj != undefined)
+        t += obj.offsetTop; 
+        //叠加父容器的上边距
+        l += obj.offsetLeft; 
+        //叠加父容器的左边距
+    }
+    return {l:l, t:t};
+}
+
+var getDom = (function(){
+    return {
+    //video播放器
+    myVideo: fid("html5VideoPlayer"),
+    //声音滚动条
+    voiceLoad: fid("voiceLoad"),
+    //声音滑块
+    domCircle: fid("videoCircle"),
+    //影片滚动条
+    filmLoad: fid("filmLoad"),
+    //影片滑块
+    filmCircle: fid("filmCircle")
+    }
+})();
+
+
+
+function addEvent(ele, event_name, func){
+    if(window.attachEvent){
+        ele.attachEvent(event_name, func);
+    }
+    else{
+        event_name = event_name.replace(/^on/, "");
+        ele.addEventListener(event_name, func, false);    
+        //默认事件是冒泡
+    }
+}
+
+var filmCircleSign;
+
+// 记录声音开发，以及更改之后的声音
+var noSoundSign = {
+    sign: false,
+    voice: 0.5
+};
+
+getDom.myVideo.volume = 0.5;
+getDom.domCircle.style.left = "50px";
+getDom.voiceLoad.style.width = 50;
+
+// 声音拖动控制
+addEvent(getDom.domCircle, "onmousedown", function (event) {
+    // 鼠标移动时
+    var evnt = window.event || event;                   // 得到鼠标事件
+    disX = evnt.clientX - getDom.domCircle.offsetLeft;   // 鼠标横坐标 - 声音div的left
+    disY = evnt.clientY - getDom.domCircle.offsetTop;    // 鼠标纵坐标 - 声音div的top
+    document.onmousemove = function(event) {
+        var evnt = window.event || event;
+        var x = evnt.clientX - disX;
+        var y = evnt.clientY - disY;
+        var window_width  = document.documentElement.clientWidth  - getDom.domCircle.offsetWidth;
+        var window_height = document.documentElement.clientHeight - getDom.domCircle.offsetHeight;
+         
+        x = ( x < 0 ) ? 0 : x;                          // 当声音div到窗口最左边时
+        x = ( x > window_width ) ? window_width : x;    // 当声音div到窗口最右边时
+        y = ( y < 0 ) ? 0 : y;                          // 当声音div到窗口最上边时
+        y = ( y > window_height ) ? window_height : y;  // 当声音div到窗口最下边时
+        if(x < 95){
+            getDom.domCircle.style.left = x + "px";
+            getDom.voiceLoad.style.width = x;
+            noSoundSign.voice = getDom.myVideo.volume = x/100;
+        }
+    };
+   // 鼠标抬起时
+    document.onmouseup = function() {
+        document.onmousemove =null;
+        document.onmouup = null;
+        document.onclick = null;
+    };
+     
+    return false;
+});
+
+// 声音点击调节
+addEvent(fid('voiceWrap'), 'onclick', function (event) {
+    var evnt = event || window.event;                   
+    // 得到鼠标事件
+    var voiceWrapLeft = getPoint(fid('voiceWrap')).l;
+    var x = evnt.clientX - voiceWrapLeft;
+    if(x < 100){
+        getDom.domCircle.style.left = x + "px";
+        getDom.voiceLoad.style.width = x;
+        noSoundSign.voice = getDom.myVideo.volume = x/100;
+    }
+});
+
+
+
+// 播放进度条播放控制
+addEvent(getDom.filmCircle, "onmousedown", function (event) {
+    // 拖动标记
+    filmCircleSign = true;
+    // 鼠标移动时
+    var evnt = window.event || event;                   
+    // 得到鼠标事件
+    disX = evnt.clientX - getDom.filmCircle.offsetLeft;   
+    // 鼠标横坐标 - div1的left
+    disY = evnt.clientY - getDom.filmCircle.offsetTop;    
+    // 鼠标纵坐标 - div1的top
+    document.onmousemove = function(event) {
+        var evnt = window.event || event;
+        var x = evnt.clientX - disX;
+        var y = evnt.clientY - disY;
+        var window_width  = document.documentElement.clientWidth  - filmCircle.offsetWidth;
+        var window_height = document.documentElement.clientHeight - filmCircle.offsetHeight;
+         
+        x = ( x < 0 ) ? 0 : x;                          // 当div1到窗口最左边时
+        x = ( x > window_width ) ? window_width : x;    // 当div1到窗口最右边时
+        y = ( y < 0 ) ? 0 : y;                          // 当div1到窗口最上边时
+        y = ( y > window_height ) ? window_height : y;  // 当div1到窗口最下边时
+        if(x < 495){
+            getDom.filmCircle.style.left = x + "px";
+            getDom.filmLoad.style.width = x;
+            playBySeconds(x);
+        }
+    };
+   // 鼠标抬起时
+    document.onmouseup = function() {
+        document.onmousemove =null;
+        document.onmouup = null;
+        filmCircleSign = false;
+    };
+     
+    return false;
+});
+
+
+// 进度条点击调节
+addEvent(fid('filmWrap'), 'onclick', function (event) {
+    var evnt = event || window.event;                   
+    // 得到鼠标事件
+    var voiceWrapLeft = getPoint(fid('filmWrap')).l;
+    var x = evnt.clientX - voiceWrapLeft;
+    if(x < 500){
+        getDom.filmCircle.style.left = x + "px";
+        getDom.filmLoad.style.width = x;
+        playBySeconds(x);
+    }
+});
+
+// 继续
+function play(){ 
+    fid("html5PlayerToolbarContinue").style.display = "none";
+    fid("html5PlayerToolbarStop").style.display = "inline-block";
+    getDom.myVideo.play();
+}
+ // 暂停
+function pause(){ 
+    fid("html5PlayerToolbarContinue").style.display = "inline-block";
+    fid("html5PlayerToolbarStop").style.display = "none";
+    getDom.myVideo.pause();
+
+}
+
+// 位置修改至某一秒
+function playBySeconds(num){ 
+    getDom.myVideo.currentTime = getDom.myVideo.duration/500 * num  ;
+}
+
+// 时间转换 输入分秒
+function formatTime(seconds){
+    var h = parseInt(seconds/3600, 10);
+    var m = parseInt(seconds%3600/60, 10);
+    var s = parseInt(seconds%60, 10);
+    var time = '';
+    if(h == 0) {
+        time += '';
+    } else {
+        time += h;
+    }
+    if(m >= 10){
+        time += m + ":";
+    } else if( m > 0){
+        time += "0" + m + ":";
+    } else {
+        time += "00:";
+    }
+
+    if(s >= 10){
+        time += s;
+    } else if( s > 0){
+        time += "0" + s;
+    } else {
+        time += "00";
+    }
+    return time;
+}
+// 播放时间
+addEvent(getDom.myVideo, "timeupdate", function(){
+    var currentTime = getDom.myVideo.currentTime;//获取当前播放时间
+    fid('currentTime').innerHTML = formatTime(currentTime);
+    fid('duration').innerHTML = formatTime(getDom.myVideo.duration);
+    // if( filmCircleSign === false){
+        getDom.filmCircle.style.left = currentTime/getDom.myVideo.duration * 500 + "px";
+        getDom.filmLoad.style.width = currentTime/getDom.myVideo.duration * 500;
+    // }
+});
+// 静音操作
+// voiceIconNo
+function nosound() {
+    if(noSoundSign.sign == false){
+        noSoundSign.sign = true;
+        getDom.myVideo.volume = 0;
+        getDom.domCircle.style.left = "0px";
+        getDom.voiceLoad.style.width = 0;
+        fid("voiceIcon").style.display = "none";
+        fid("voiceIconNo").style.display = "inline-block";
+    } else {
+        noSoundSign.sign = false;
+        getDom.myVideo.volume = noSoundSign.voice;
+        getDom.domCircle.style.left = noSoundSign.voice * 100 + "px";
+        getDom.voiceLoad.style.width = noSoundSign.voice * 100;
+        fid("voiceIcon").style.display = "inline-block";
+        fid("voiceIconNo").style.display = "none";
+    }
+}
+
+// 全屏操作
+function allscreem(){
+//判断是否ie并进行相应的全屏
+    //requestFullScreen()
+    var navigatorName = "Microsoft Internet Explorer";    
+    if( navigator.appName == navigatorName ){    
+    //alert("ie")   
+        var WsShell = new ActiveXObject('WScript.Shell') 
+        WsShell.SendKeys('{F11}'); 
+    } else {   
+        if (getDom.myVideo.requestFullscreen) {
+            getDom.myVideo.requestFullscreen();
+        } else if (getDom.myVideo.mozRequestFullScreen) {
+            getDom.myVideo.mozRequestFullScreen();
+        } else if (getDom.myVideo.webkitRequestFullScreen) {
+            getDom.myVideo.webkitRequestFullScreen();
+        }else if (getDom.myVideo.msRequestFullscreen) {
+            getDom.myVideo.msRequestFullscreen();
+        }   
+    }
+}
+
+function share(){
+    alert('分享');
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
