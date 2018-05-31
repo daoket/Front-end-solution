@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>myRequireJs-master</name>
+	<name>require简单实现</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -16,7 +16,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1524710832023</id>
+			<id>1527771404079</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
