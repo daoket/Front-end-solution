@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <script src="js/baidu_tts_cors.js"></script>
+  <script src="js/main.js"></script>
+</head>
+<body>
+    <div>
+        <input type="text" id='text' value='百度语音合成' style='width: 500px;'>
+        <button class="play">合成</button>
+        <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+        	$('.play').on('click', function () {
+        	  tts()
+        	})
+        </script>
+    </div>
+</body>
+</html>
