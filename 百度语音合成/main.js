@@ -1,7 +1,6 @@
 /**
  * 百度语音识别
- * wtniu@iflytek.com
- * 2018-07-08
+ * Created by wtniu on 2018-07-08
  * 参考：https://ai.baidu.com/docs/#/ASR-Online-Node-SDK/top
  */
 const fs = require('fs');
