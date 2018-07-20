@@ -1,0 +1,54 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ThreeSixty</title>
+  <link rel="stylesheet" href="css/main.css"> 
+</head>
+<body>
+  <h2>threesixty</h2>
+  <div class="threesixty-wrapper">
+    <!--设置图片路径和图片个数，index从0开始-->
+    <div class="threesixty" data-path="images/{index}.png" data-count="51">
+      <div class="ui-spinner"> <span class="side side-left">
+        <span class="fill"></span> </span> 
+        <span class="side side-right">
+        <span class="fill"></span> </span>
+      </div>
+    </div>
+    <!--上一张下一张-->
+    <div class="ui">
+      <div class="next">next frame</div>
+      <div class="prev">previous frame</div>
+    </div> 
+  </div>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="js/jquery.threesixty.js"></script>
+  <script>
+    $(document).ready(function() {
+      var $threeSixty = $('.threesixty');
+      $threeSixty.threeSixty({
+        dragDirection: 'horizontal',
+        useKeys: true,
+        draggable: true
+      });
+      $('.next').click(function() {
+        $threeSixty.nextFrame();
+      });
+      $('.prev').click(function() {
+        $threeSixty.prevFrame();
+      });
+      $threeSixty.on('down', function() {
+        $('.ui, h1, h2, .label, .examples').stop().animate({
+          opacity: 0
+        }, 300);
+      });
+      $threeSixty.on('up', function() {
+        $('.ui, h1, h2, .label, .examples').stop().animate({
+          opacity: 1
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>
