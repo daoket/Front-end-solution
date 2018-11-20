@@ -7,9 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <title>Document</title>
   <style>
-    p {color: orange;padding: 5px 10px;margin: 0;}
-    .user_msg {color: #ccc;}
-    #messages {background: #000;}
+    .form-group{margin-top: 15px;}
   </style>
 </head>
 <body>
@@ -29,7 +27,7 @@
       </form>
       <!--改变昵称-->
       <div class="form-group">
-        <span>nikename: </span>
+        <span>昵称: </span>
         <input id="name" type="text" />
         <button class="btn btn-sm btn-info" onclick="changName();">change</button>
       </div>
@@ -38,7 +36,7 @@
   <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
   <script type="text/javascript">
     //建立连接
-    var ws = new WebSocket("ws://localhost:1234/chat");
+    var ws = new WebSocket("wss://wtniu.com/wss/");
     var nickname = "";
     ws.onopen = function(e) {
       console.log('Connection to server opened');
